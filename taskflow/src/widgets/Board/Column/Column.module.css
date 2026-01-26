@@ -1,22 +1,22 @@
 .column {
   width: 280px;
   padding: 16px;
-  border: 1px solid var(--border);
   border-radius: 12px;
   background: var(--bg);
+  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
 }
 
 .tasks {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.title {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: var(--text);
 }

@@ -1,10 +1,10 @@
 .card {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
   padding: 12px;
-  border: 1px solid var(--border);
   border-radius: 10px;
+  border: 1px solid var(--border);
   background: var(--card-bg);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
@@ -16,14 +16,18 @@
 
 .title {
   flex: 1;
-  font-size: 14px;
   font-weight: 500;
   color: var(--text);
 }
 
-button {
-  cursor: pointer;
+.buttons button {
   background: transparent;
   border: none;
+  cursor: pointer;
   font-size: 16px;
+  margin-left: 4px;
+}
+
+.important {
+  border-left: 4px solid gold;
 }

@@ -4,18 +4,7 @@ import styles from "./Board.module.css";
 import type { Task } from "../../entities/task/task.types";
 
 export default function Board() {
-  // ✅ Тема внутри компонента
   const [theme, setTheme] = useState<"light" | "dark">("light");
-
-  useEffect(() => {
-    document.body.dataset.theme = theme;
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => (prev === "dark" ? "light" : "dark"));
-  };
-
-  // ✅ Состояние задач
   const [tasks, setTasks] = useState<Task[]>([
     { id: "1", title: "Buy groceries", columnId: "todo", priority: "normal", isPinned: false, isImportant: true },
     { id: "2", title: "Clean room", columnId: "todo", priority: "low", isPinned: false, isImportant: false },
@@ -24,6 +13,12 @@ export default function Board() {
     { id: "5", title: "Workout", columnId: "done", priority: "normal", isPinned: false, isImportant: false },
     { id: "6", title: "Call friend", columnId: "done", priority: "low", isPinned: false, isImportant: false },
   ]);
+
+  useEffect(() => {
+    document.body.dataset.theme = theme;
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(prev => (prev === "dark" ? "light" : "dark"));
 
   const addTask = (title: string, columnId: string) => {
     const newTask: Task = {
@@ -38,20 +33,15 @@ export default function Board() {
   };
 
   const togglePinned = (id: string) => {
-    setTasks(prev =>
-      prev.map(task => (task.id === id ? { ...task, isPinned: !task.isPinned } : task))
-    );
+    setTasks(prev => prev.map(task => task.id === id ? { ...task, isPinned: !task.isPinned } : task));
   };
 
   const toggleImportant = (id: string) => {
-    setTasks(prev =>
-      prev.map(task => (task.id === id ? { ...task, isImportant: !task.isImportant } : task))
-    );
+    setTasks(prev => prev.map(task => task.id === id ? { ...task, isImportant: !task.isImportant } : task));
   };
 
   return (
     <div>
-      {/* Добавление новой задачи и переключение темы */}
       <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
         <input id="newTaskInput" placeholder="New task" />
         <button onClick={() => {
@@ -62,9 +52,7 @@ export default function Board() {
           }
         }}>Add Task</button>
 
-        <button onClick={toggleTheme}>
-          Toggle Theme
-        </button>
+        <button onClick={toggleTheme}>Toggle Theme</button>
       </div>
 
       <section className={styles.board}>

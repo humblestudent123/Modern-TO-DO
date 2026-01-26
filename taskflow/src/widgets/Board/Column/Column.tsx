@@ -11,21 +11,17 @@ type Props = {
 };
 
 export default function Column({ title, columnId, tasks, onTogglePinned, onToggleImportant }: Props) {
+  // Сортировка: pinned сверху
   const filteredTasks = tasks
     .filter(task => task.columnId === columnId)
-    .sort((a, b) => (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0)); // pinned сверху
+    .sort((a, b) => (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0));
 
   return (
     <div className={styles.column}>
       <h3 className={styles.title}>{title}</h3>
       <div className={styles.tasks}>
         {filteredTasks.map(task => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            onTogglePinned={onTogglePinned}
-            onToggleImportant={onToggleImportant}
-          />
+          <TaskCard key={task.id} task={task} onTogglePinned={onTogglePinned} onToggleImportant={onToggleImportant} />
         ))}
       </div>
     </div>

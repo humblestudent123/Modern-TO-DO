@@ -1,4 +1,4 @@
-import type { Task } from "./task.types";
+import type { Task } from "../../entities/task/task.types";
 import styles from "./TaskCard.module.css";
 
 type Props = {
@@ -11,12 +11,12 @@ export default function TaskCard({ task, onTogglePinned, onToggleImportant }: Pr
   if (!task) return null;
 
   return (
-    <div className={styles.card}>
-      <div style={{ flex: 1 }}>
-        <p className={styles.title}>{task.title}</p>
+    <div className={`${styles.card} ${task.isImportant ? styles.important : ""}`}>
+      <p className={styles.title}>{task.title}</p>
+      <div className={styles.buttons}>
+        <button onClick={() => onTogglePinned?.(task.id)}>📌</button>
+        <button onClick={() => onToggleImportant?.(task.id)}>⭐</button>
       </div>
-      <button onClick={() => onTogglePinned?.(task.id)}>📌</button>
-      <button onClick={() => onToggleImportant?.(task.id)}>⭐</button>
     </div>
   );
 }
