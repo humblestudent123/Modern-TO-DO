@@ -8,19 +8,41 @@ type Props = {
   tasks: Task[];
   onTogglePinned: (id: string) => void;
   onToggleImportant: (id: string) => void;
-  onMoveTask: (taskId: string, toColumnId: string) => void; // новая функция
+  onDelete: (id: string) => void;
+  onMoveTask: (taskId: string, toColumnId: string) => void;
+  onChangePriority?: (id: string, priority: Task["priority"]) => void;
 };
 
-export default function Column({ title, columnId, tasks, onTogglePinned, onToggleImportant, onMoveTask }: Props) {
+export default function Column({
+  title,
+  columnId,
+  tasks,
+  onTogglePinned,
+  onToggleImportant,
+  onDelete,
+  onMoveTask,
+  onChangePriority
+}: Props) {
+
+  // Фильтруем задачи по колонке и сортируем:
+  // 1. Pinned → 2. Important → 3. Priority (high → normal → low)
   const filteredTasks = tasks
     .filter(task => task.columnId === columnId)
-    .sort((a, b) => (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0));
+    .sort((a, b) => {
+      // pinned всегда сверху
+      if (a.isPinned && !b.isPinned) return -1;
+      if (!a.isPinned && b.isPinned) return 1;
 
-  // Drag & Drop
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault(); // нужно для drop
-  };
+      // важные после pinned
+      if (a.isImportant && !b.isImportant) return -1;
+      if (!a.isImportant && b.isImportant) return 1;
 
+      // сортировка по приоритету внутри группы
+      const priorityOrder = { high: 3, normal: 2, low: 1 };
+      return priorityOrder[b.priority] - priorityOrder[a.priority];
+    });
+
+  const handleDragOver = (e: React.DragEvent) => e.preventDefault();
   const handleDrop = (e: React.DragEvent) => {
     const taskId = e.dataTransfer.getData("text/plain");
     if (taskId) onMoveTask(taskId, columnId);
@@ -36,12 +58,13 @@ export default function Column({ title, columnId, tasks, onTogglePinned, onToggl
             task={task}
             onTogglePinned={onTogglePinned}
             onToggleImportant={onToggleImportant}
-            draggable={true}
-            onDragStart={(e: React.DragEvent) => e.dataTransfer.setData("text/plain", task.id)}
+            onDelete={onDelete}
+            onChangePriority={onChangePriority}
+            draggable
+            onDragStart={(e) => e.dataTransfer.setData("text/plain", task.id)}
           />
         ))}
       </div>
     </div>
   );
 }
-

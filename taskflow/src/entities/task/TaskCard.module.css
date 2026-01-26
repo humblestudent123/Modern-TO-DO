@@ -1,49 +1,43 @@
 .card {
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: var(--card-bg);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease;
-  animation: fadeIn 0.3s ease;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
 .title {
-  flex: 1;
+  margin: 0;
   font-weight: 500;
-  color: var(--text);
 }
 
 .buttons button {
   background: transparent;
   border: none;
   cursor: pointer;
-  font-size: 16px;
-  margin-left: 4px;
+  font-size: 18px;
+  margin-left: 6px;
 }
 
+/* Закреплённая задача */
+.pinned {
+  border-left: 4px solid #f39c12; /* оранжевая полоска */
+  background-color: rgba(243, 156, 18, 0.1); /* светлый оранжевый фон */
+  cursor: default; /* показываем что нельзя перетаскивать */
+  box-shadow: 0 3px 6px rgba(243,156,18,0.3); /* слегка ярче тень */
+}
+
+/* Важная задача */
 .important {
-  border-left: 4px solid gold;
-}
-
-/* Цвет по приоритету */
-.high {
-  border-left: 4px solid #ff4d4d; /* красный */
-}
-
-.low {
-  border-left: 4px solid #4dff4d; /* зелёный */
-}
-
-/* Анимация добавления */
-@keyframes fadeIn {
-  0% { opacity: 0; transform: translateY(-8px); }
-  100% { opacity: 1; transform: translateY(0); }
+  background-color: rgba(231, 76, 60, 0.1); /* красный светлый фон */
+  border-left: 4px solid #e74c3c;
 }
