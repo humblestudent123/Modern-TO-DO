@@ -6,7 +6,8 @@
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--card-bg);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease;
+  animation: fadeIn 0.3s ease;
 }
 
 .card:hover {
@@ -30,4 +31,19 @@
 
 .important {
   border-left: 4px solid gold;
+}
+
+/* Цвет по приоритету */
+.high {
+  border-left: 4px solid #ff4d4d; /* красный */
+}
+
+.low {
+  border-left: 4px solid #4dff4d; /* зелёный */
+}
+
+/* Анимация добавления */
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(-8px); }
+  100% { opacity: 1; transform: translateY(0); }
 }

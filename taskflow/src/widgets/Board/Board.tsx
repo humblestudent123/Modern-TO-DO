@@ -32,6 +32,15 @@ export default function Board() {
     setTasks(prev => [...prev, newTask]);
   };
 
+  
+  const moveTask = (taskId: string, toColumnId: string) => {
+  setTasks(prev =>
+    prev.map(task =>
+      task.id === taskId ? { ...task, columnId: toColumnId } : task
+    )
+  );
+};
+
   const togglePinned = (id: string) => {
     setTasks(prev => prev.map(task => task.id === id ? { ...task, isPinned: !task.isPinned } : task));
   };
@@ -56,10 +65,33 @@ export default function Board() {
       </div>
 
       <section className={styles.board}>
-        <Column title="Todo" columnId="todo" tasks={tasks} onTogglePinned={togglePinned} onToggleImportant={toggleImportant} />
-        <Column title="In Progress" columnId="inProgress" tasks={tasks} onTogglePinned={togglePinned} onToggleImportant={toggleImportant} />
-        <Column title="Done" columnId="done" tasks={tasks} onTogglePinned={togglePinned} onToggleImportant={toggleImportant} />
+        <Column
+          title="Todo"
+          columnId="todo"
+          tasks={tasks}
+          onTogglePinned={togglePinned}
+          onToggleImportant={toggleImportant}
+          onMoveTask={moveTask}
+        />
+        <Column
+          title="In Progress"
+          columnId="inProgress"
+          tasks={tasks}
+          onTogglePinned={togglePinned}
+          onToggleImportant={toggleImportant}
+          onMoveTask={moveTask}
+        />
+        <Column
+          title="Done"
+          columnId="done"
+          tasks={tasks}
+          onTogglePinned={togglePinned}
+          onToggleImportant={toggleImportant}
+          onMoveTask={moveTask}
+        />
+
       </section>
     </div>
   );
 }
+
