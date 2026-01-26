@@ -1,8 +1,12 @@
-// src/widgets/Board/Board.tsx
+import Column from "./Column/Column";
+import styles from "./Board.module.css";
+
 export default function Board() {
   return (
-    <main>
-      Board
-    </main>
+    <section className={styles.board}>
+      <Column title="Todo" />
+      <Column title="In Progress" />
+      <Column title="Done" />
+    </section>
   );
 }
