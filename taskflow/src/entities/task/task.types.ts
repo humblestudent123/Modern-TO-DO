@@ -2,7 +2,7 @@
 export type Task = {
   id: string;
   title: string;
-  columnId: string; // 'todo', 'inProgress', 'done'
+  columnId: string; // 'todo' | 'inProgress' | 'done'
   priority: "low" | "normal" | "high";
   isPinned: boolean;
   isImportant: boolean;

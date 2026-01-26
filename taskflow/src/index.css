@@ -23,3 +23,46 @@ body {
 /* Links & buttons */
 button {
   font-family: inher
+}
+
+
+:root {
+  --bg: #f0f0f0;
+  --card-bg: #fff;
+  --text: #000;
+  --border: #aaa;
+}
+
+[data-theme="dark"] {
+  --bg: #1e1e2f;
+  --card-bg: #2e2e3f;
+  --text: #fff;
+  --border: #555;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+
+:root {
+  --bg: #f0f0f0;
+  --card-bg: #fff;
+  --text: #000;
+  --border: #aaa;
+}
+
+[data-theme="dark"] {
+  --bg: #1e1e2f;
+  --card-bg: #2e2e3f;
+  --text: #fff;
+  --border: #555;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
