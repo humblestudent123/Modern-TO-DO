@@ -48,23 +48,33 @@ export default function Column({
     if (taskId) onMoveTask(taskId, columnId);
   };
 
-  return (
-    <div className={styles.column} onDragOver={handleDragOver} onDrop={handleDrop}>
-      <h3 className={styles.title}>{title}</h3>
-      <div className={styles.tasks}>
-        {filteredTasks.map(task => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            columnId={columnId} // <- вот здесь
-            onTogglePinned={onTogglePinned}
-            onToggleImportant={onToggleImportant}
-            onDelete={onDelete}
-            draggable
-            onDragStart={(e) => e.dataTransfer.setData("text/plain", task.id)}
-          />
-        ))}
-      </div>
+return (
+  <div
+    className={`
+      ${styles.column} 
+      ${columnId === "todo" ? styles.todoColumn :
+        columnId === "inProgress" ? styles.inProgressColumn :
+        columnId === "done" ? styles.doneColumn : ""}
+    `}
+    onDragOver={handleDragOver}
+    onDrop={handleDrop}
+  >
+    <h3 className={styles.title}>{title}</h3>
+    <div className={styles.tasks}>
+      {filteredTasks.map(task => (
+        <TaskCard
+          key={task.id}
+          task={task}
+          columnId={columnId} // <- обязательно
+          onTogglePinned={onTogglePinned}
+          onToggleImportant={onToggleImportant}
+          onDelete={onDelete}
+          draggable
+          onDragStart={(e) => e.dataTransfer.setData("text/plain", task.id)}
+        />
+      ))}
     </div>
-  );
+  </div>
+);
+
 }

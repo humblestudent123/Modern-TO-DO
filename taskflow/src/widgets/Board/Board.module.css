@@ -1,6 +1,27 @@
 .board {
   display: flex;
-  gap: 24px;
-  padding: 24px;
-  overflow-x: auto;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Фоны для колонок */
+.todo-column {
+  background-color: #f0f8ff; /* светло-голубой */
+  border-radius: 8px;
+  padding: 12px;
+  flex: 1;
+}
+
+.inProgress-column {
+  background-color: #fff3cd; /* светло-жёлтый */
+  border-radius: 8px;
+  padding: 12px;
+  flex: 1;
+}
+
+.done-column {
+  background-color: #d4edda; /* светло-зелёный */
+  border-radius: 8px;
+  padding: 12px;
+  flex: 1;
 }

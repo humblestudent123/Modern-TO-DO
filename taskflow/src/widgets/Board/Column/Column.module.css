@@ -20,3 +20,17 @@
   flex-direction: column;
   gap: 8px;
 }
+
+
+/* Фоны для разных колонок */
+.todoColumn {
+  background-color: #f0f8ff; /* светло-голубой */
+}
+
+.inProgressColumn {
+  background-color: #fff3cd; /* светло-жёлтый */
+}
+
+.doneColumn {
+  background-color: #d4edda; /* светло-зелёный */
+}
