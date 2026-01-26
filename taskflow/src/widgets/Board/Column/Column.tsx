@@ -11,6 +11,8 @@ type Props = {
   onDelete: (id: string) => void;
   onMoveTask: (taskId: string, toColumnId: string) => void;
   onChangePriority?: (id: string, priority: Task["priority"]) => void;
+  onAddSubTask?: (taskId: string, title: string) => void;
+  onToggleSubTask?: (taskId: string, subTaskId: string) => void;
 };
 
 export default function Column({
@@ -21,7 +23,9 @@ export default function Column({
   onToggleImportant,
   onDelete,
   onMoveTask,
-  onChangePriority
+  onChangePriority,
+  onAddSubTask,
+  onToggleSubTask,
 }: Props) {
 
   // Фильтруем задачи по колонке и сортируем:
@@ -65,10 +69,12 @@ return (
         <TaskCard
           key={task.id}
           task={task}
-          columnId={columnId} // <- обязательно
+          columnId={columnId}
           onTogglePinned={onTogglePinned}
           onToggleImportant={onToggleImportant}
           onDelete={onDelete}
+          onAddSubTask={onAddSubTask}
+          onToggleSubTask={onToggleSubTask}
           draggable
           onDragStart={(e) => e.dataTransfer.setData("text/plain", task.id)}
         />

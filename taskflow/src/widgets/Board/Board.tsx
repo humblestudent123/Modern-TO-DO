@@ -7,13 +7,11 @@ export default function Board() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [tasks, setTasks] = useState<Task[]>([]);
 
-  // Загрузка задач из localStorage при старте
   useEffect(() => {
     const savedTasks = localStorage.getItem("tasks");
     if (savedTasks) {
       setTasks(JSON.parse(savedTasks));
     } else {
-      // Если нет в localStorage, создаем дефолтные задачи
       setTasks([
         { id: "1", title: "Buy groceries", columnId: "todo", priority: "normal", isPinned: false, isImportant: true },
         { id: "2", title: "Clean room", columnId: "todo", priority: "low", isPinned: false, isImportant: false },
@@ -25,7 +23,6 @@ export default function Board() {
     }
   }, []);
 
-  // Сохраняем задачи в localStorage при каждом изменении
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
@@ -37,23 +34,49 @@ export default function Board() {
   const toggleTheme = () => setTheme(prev => (prev === "dark" ? "light" : "dark"));
 
   const addTask = (title: string, columnId: string, priority: Task["priority"], isPinned: boolean, isImportant: boolean) => {
-    const newTask: Task = {
-      id: Date.now().toString(),
-      title,
-      columnId,
-      priority,
-      isPinned,
-      isImportant,
-    };
+    const newTask: Task = { id: Date.now().toString(), title, columnId, priority, isPinned, isImportant };
     setTasks(prev => [...prev, newTask]);
   };
 
-  const deleteTask = (id: string) => setTasks(prev => prev.filter(task => task.id !== id));
+  const addSubTask = (taskId: string, title: string) => {
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === taskId
+          ? { ...task, subTasks: [...(task.subTasks || []), { id: Date.now().toString(), title, isDone: false }] }
+          : task
+      )
+    );
+  };
 
+  
+
+
+
+  // Board.tsx — внутри компонента Board, рядом с другими функциями
+const toggleSubTask = (taskId: string, subTaskId: string) => {
+  setTasks(prev =>
+    prev.map(task =>
+      task.id === taskId
+        ? {
+            ...task,
+            subTasks: task.subTasks?.map(sub =>
+              sub.id === subTaskId ? { ...sub, isDone: !sub.isDone } : sub
+            ),
+          }
+        : task
+    )
+  );
+};
+
+
+
+
+
+
+  const deleteTask = (id: string) => setTasks(prev => prev.filter(task => task.id !== id));
   const moveTask = (taskId: string, toColumnId: string) => {
     setTasks(prev => prev.map(task => task.id === taskId ? { ...task, columnId: toColumnId } : task));
   };
-
   const togglePinned = (id: string) => setTasks(prev => prev.map(task => task.id === id ? { ...task, isPinned: !task.isPinned } : task));
   const toggleImportant = (id: string) => setTasks(prev => prev.map(task => task.id === id ? { ...task, isImportant: !task.isImportant } : task));
   const changePriority = (id: string, priority: Task["priority"]) => setTasks(prev => prev.map(task => task.id === id ? { ...task, priority } : task));
@@ -78,7 +101,6 @@ export default function Board() {
           const priority = (document.getElementById("prioritySelect") as HTMLSelectElement).value as Task["priority"];
           const isPinned = (document.getElementById("pinnedCheckbox") as HTMLInputElement).checked;
           const isImportant = (document.getElementById("importantCheckbox") as HTMLInputElement).checked;
-
           if (input.value) {
             addTask(input.value, "todo", priority, isPinned, isImportant);
             input.value = "";
@@ -89,38 +111,22 @@ export default function Board() {
       </div>
 
       <section className={styles.board}>
-        <Column
-          title="Todo"
-          columnId="todo"
-          tasks={tasks}
-          onTogglePinned={togglePinned}
-          onToggleImportant={toggleImportant}
-          onDelete={deleteTask}
-          onMoveTask={moveTask}
-          onChangePriority={changePriority}
-        />
-        <Column
-          title="In Progress"
-          columnId="inProgress"
-          tasks={tasks}
-          onTogglePinned={togglePinned}
-          onToggleImportant={toggleImportant}
-          onDelete={deleteTask}
-          onMoveTask={moveTask}
-          onChangePriority={changePriority}
-        />
-        <Column
-          title="Done"
-          columnId="done"
-          tasks={tasks}
-          onTogglePinned={togglePinned}
-          onToggleImportant={toggleImportant}
-          onDelete={deleteTask}
-          onMoveTask={moveTask}
-          onChangePriority={changePriority}
-        />
+        {["todo", "inProgress", "done"].map(columnId => (
+          <Column
+            key={columnId}
+            title={columnId === "todo" ? "Todo" : columnId === "inProgress" ? "In Progress" : "Done"}
+            columnId={columnId}
+            tasks={tasks}
+            onTogglePinned={togglePinned}
+            onToggleImportant={toggleImportant}
+            onDelete={deleteTask}
+            onMoveTask={moveTask}
+            onChangePriority={changePriority}
+            onAddSubTask={addSubTask} // <- передаем в Column
+            onToggleSubTask={toggleSubTask}
+          />
+        ))}
       </section>
     </div>
   );
 }
-
