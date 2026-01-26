@@ -56,10 +56,10 @@ export default function Column({
           <TaskCard
             key={task.id}
             task={task}
+            columnId={columnId} // <- вот здесь
             onTogglePinned={onTogglePinned}
             onToggleImportant={onToggleImportant}
             onDelete={onDelete}
-            onChangePriority={onChangePriority}
             draggable
             onDragStart={(e) => e.dataTransfer.setData("text/plain", task.id)}
           />

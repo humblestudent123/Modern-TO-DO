@@ -7,7 +7,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: 
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background-color 0.3s ease,
+    border-left 0.3s ease;
 }
 
 .card:hover {
@@ -31,13 +35,20 @@
 /* Закреплённая задача */
 .pinned {
   border-left: 4px solid #f39c12; /* оранжевая полоска */
-  background-color: rgba(243, 156, 18, 0.1); /* светлый оранжевый фон */
-  cursor: default; /* показываем что нельзя перетаскивать */
-  box-shadow: 0 3px 6px rgba(243,156,18,0.3); /* слегка ярче тень */
+  background-color: rgba(243, 156, 18, 0.15); /* светлый оранжевый фон */
+  cursor: default; 
+  box-shadow: 0 4px 12px rgba(243,156,18,0.3); /* чуть ярче тень */
+  transform: translateY(-5px); /* чуть поднимаем визуально */
 }
 
 /* Важная задача */
 .important {
-  background-color: rgba(231, 76, 60, 0.1); /* красный светлый фон */
+  background-color: rgba(231, 76, 60, 0.1); 
   border-left: 4px solid #e74c3c;
+}
+
+.done {
+  background-color: #d4edda; /* светло-зелёный фон */
+  border-left: 4px solid #28a745; /* зелёная полоска слева */
+  color: #155724; /* тёмно-зелёный текст */
 }
