@@ -1,9 +1,18 @@
+import type { Task } from "../../entities/task/task.types";
 import styles from "./TaskCard.module.css";
 
-export default function TaskCard() {
+type Props = {
+  task: Task;
+};
+
+export default function TaskCard({ task }: Props) {
+  if (!task) return null; // защита от undefined
+
   return (
     <div className={styles.card}>
-      <p className={styles.title}>Task title</p>
+      {task.isPinned && <span>📌</span>}
+      {task.isImportant && <span>⭐</span>}
+      <p className={styles.title}>{task.title}</p>
     </div>
   );
 }

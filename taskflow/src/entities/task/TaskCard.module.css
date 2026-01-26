@@ -3,6 +3,9 @@
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .title {
