@@ -34,3 +34,16 @@
 .doneColumn {
   background-color: #d4edda; /* светло-зелёный */
 }
+
+
+.todoColumn {
+  background-color: var(--todo-bg, #f0f8ff);
+}
+
+.inProgressColumn {
+  background-color: var(--inProgress-bg, #fff3cd);
+}
+
+.doneColumn {
+  background-color: var(--done-bg, #d4edda);
+}

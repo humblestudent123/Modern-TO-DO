@@ -17,3 +17,18 @@ body {
   color: var(--text);
   font-family: Arial, sans-serif;
 }
+
+
+/* src/index.css или App.css */
+:root {
+  --card-bg: #ffffff;
+  --card-text: #111111;
+}
+
+[data-theme="dark"] {
+  --card-bg: #1f2937;    /* темный фон карточки */
+  --card-text: #f9fafb;  /* светлый текст */
+  --todo-bg: #111827;
+  --inProgress-bg: #374151;
+  --done-bg: #065f46;
+}
