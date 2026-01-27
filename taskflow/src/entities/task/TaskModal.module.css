@@ -89,13 +89,14 @@
 }
 
 .delete {
+  margin-left: auto;
   background: none;
   border: none;
-  color: #e74c3c;
-  font-size: 16px;
   cursor: pointer;
-  transition: color 0.2s;
+  color: #e74c3c;
+  font-size: 18px;
 }
+
 
 .delete:hover {
   color: #c0392b;

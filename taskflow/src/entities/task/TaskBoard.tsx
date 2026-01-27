@@ -5,32 +5,27 @@ import type { Task, SubTask } from "./task.types";
 
 export default function TaskBoard() {
   const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", title: "First Task", columnId: "todo", isPinned: false, isImportant: false, subTasks: [] },
-    { id: "2", title: "Second Task", columnId: "todo", isPinned: false, isImportant: true, subTasks: [] },
+    { id: nanoid(), title: "First Task", columnId: "todo", isPinned: false, isImportant: false, subTasks: [] },
+    { id: nanoid(), title: "Second Task", columnId: "todo", isPinned: false, isImportant: true, subTasks: [] },
   ]);
 
-  // Добавление подзадачи
   const handleAddSubTask = (taskId: string, title: string) => {
     setTasks(prev =>
       prev.map(task =>
         task.id === taskId
-          ? {
-              ...task,
-              subTasks: [...(task.subTasks || []), { id: nanoid(), title, isDone: false }]
-            }
+          ? { ...task, subTasks: [...task.subTasks, { id: nanoid(), title, isDone: false }] }
           : task
       )
     );
   };
 
-  // Отметка подзадачи
   const handleToggleSubTask = (taskId: string, subTaskId: string) => {
     setTasks(prev =>
       prev.map(task =>
         task.id === taskId
           ? {
               ...task,
-              subTasks: task.subTasks?.map(sub =>
+              subTasks: task.subTasks.map(sub =>
                 sub.id === subTaskId ? { ...sub, isDone: !sub.isDone } : sub
               )
             }
@@ -39,39 +34,29 @@ export default function TaskBoard() {
     );
   };
 
-  // Удаление подзадачи
   const handleDeleteSubTask = (taskId: string, subTaskId: string) => {
     setTasks(prev =>
       prev.map(task =>
         task.id === taskId
-          ? {
-              ...task,
-              subTasks: task.subTasks?.filter(sub => sub.id !== subTaskId)
-            }
+          ? { ...task, subTasks: task.subTasks.filter(sub => sub.id !== subTaskId) }
           : task
       )
     );
   };
 
-  // Удаление задачи
   const handleDeleteTask = (taskId: string) => {
     setTasks(prev => prev.filter(task => task.id !== taskId));
   };
 
-  // Закрепление / важная
   const handleTogglePinned = (taskId: string) => {
     setTasks(prev =>
-      prev.map(task =>
-        task.id === taskId ? { ...task, isPinned: !task.isPinned } : task
-      )
+      prev.map(task => (task.id === taskId ? { ...task, isPinned: !task.isPinned } : task))
     );
   };
 
   const handleToggleImportant = (taskId: string) => {
     setTasks(prev =>
-      prev.map(task =>
-        task.id === taskId ? { ...task, isImportant: !task.isImportant } : task
-      )
+      prev.map(task => (task.id === taskId ? { ...task, isImportant: !task.isImportant } : task))
     );
   };
 

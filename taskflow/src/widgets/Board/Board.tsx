@@ -7,6 +7,19 @@ export default function Board() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [tasks, setTasks] = useState<Task[]>([]);
 
+
+
+  const handleDeleteSubTask = (taskId: number, subTaskId: number) => {
+  setTasks(prev =>
+    prev.map(task =>
+      task.id === taskId
+        ? { ...task, subTasks: task.subTasks.filter(st => st.id !== subTaskId) }
+        : task
+    )
+  );
+};
+
+
   useEffect(() => {
     const savedTasks = localStorage.getItem("tasks");
     if (savedTasks) {
@@ -124,6 +137,7 @@ const toggleSubTask = (taskId: string, subTaskId: string) => {
             onChangePriority={changePriority}
             onAddSubTask={addSubTask} // <- передаем в Column
             onToggleSubTask={toggleSubTask}
+            onDeleteSubTask={handleDeleteSubTask}
           />
         ))}
       </section>

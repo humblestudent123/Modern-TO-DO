@@ -27,9 +27,7 @@ export default function TaskCard({
   return (
     <>
       <div
-        className={`${styles.card} ${task.isPinned ? styles.pinned : ""} ${
-          task.isImportant ? styles.important : ""
-        }`}
+        className={`${styles.card} ${task.isPinned ? styles.pinned : ""} ${task.isImportant ? styles.important : ""}`}
         onClick={() => setModalOpen(true)}
       >
         <div className={styles.cardHeader}>
