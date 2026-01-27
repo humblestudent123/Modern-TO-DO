@@ -1,9 +1,20 @@
 import { useState } from "react";
-import type { Task, SubTask } from "./task.types";
-import styles from "./TaskModal.module.css"; // Создай отдельный CSS для модального окна
+import styles from "./TaskModal.module.css";
+
+type SubTask = {
+  id: string;
+  title: string;
+  isDone: boolean;
+};
+
+type Task = {
+  id: string;
+  title: string;
+  subTasks?: SubTask[];
+};
 
 type Props = {
-  task: Task & { subTasks?: SubTask[] };
+  task: Task;
   isOpen: boolean;
   onClose: () => void;
   onAddSubTask?: (taskId: string, title: string) => void;
@@ -32,23 +43,30 @@ export default function TaskModal({
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        {/* Заголовок */}
         <div className={styles.header}>
           <h2>{task.title}</h2>
           <button className={styles.close} onClick={onClose}>✖</button>
         </div>
 
+        {/* Список подзадач */}
         <div className={styles.subTasks}>
           {(task.subTasks || []).map((sub) => (
             <div key={sub.id} className={styles.subTaskItem}>
-              <button
+              {/* Чекбокс */}
+              <div
                 className={`${styles.checkbox} ${sub.isDone ? styles.done : ""}`}
                 onClick={() => onToggleSubTask?.(task.id, sub.id)}
               >
                 {sub.isDone ? "✔" : ""}
-              </button>
-              <span className={sub.isDone ? styles.doneText : ""}>
+              </div>
+
+              {/* Заголовок */}
+              <span className={`${styles.subTaskTitle} ${sub.isDone ? styles.done : ""}`}>
                 {sub.title}
               </span>
+
+              {/* Удаление */}
               <button
                 className={styles.delete}
                 onClick={() => onDeleteSubTask?.(task.id, sub.id)}
@@ -59,6 +77,7 @@ export default function TaskModal({
           ))}
         </div>
 
+        {/* Добавление новой подзадачи */}
         <div className={styles.addSubTask}>
           <input
             type="text"
