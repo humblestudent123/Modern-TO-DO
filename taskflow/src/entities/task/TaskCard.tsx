@@ -27,9 +27,19 @@ export default function TaskCard({
   return (
     <>
       <div
-        className={`${styles.card} ${task.isPinned ? styles.pinned : ""} ${task.isImportant ? styles.important : ""}`}
-        onClick={() => setModalOpen(true)}
-      >
+  className={`${styles.card} ${task.isPinned ? styles.pinned : ""} ${task.isImportant ? styles.important : ""}`}
+  draggable
+  onDragStart={(e) => {
+    e.dataTransfer.setData("text/plain", task.id);
+    // Если нужно, можно настроить drag image
+  }}
+  onClick={(e) => {
+    // Только открываем модалку, если это не drag
+    if (!(e.nativeEvent as any).dragging) {
+      setModalOpen(true);
+    }
+  }}
+>
         <div className={styles.cardHeader}>
           <p className={styles.title}>{task.title}</p>
           <div className={styles.buttons}>
