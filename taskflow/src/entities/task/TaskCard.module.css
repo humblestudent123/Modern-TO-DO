@@ -101,40 +101,6 @@
 
 
 
-.expanded {
-  margin-top: 8px;
-  padding-top: 8px;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
-}
-
-.description {
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.subTasks {
-  list-style: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-.subTasks li {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 4px;
-  font-size: 14px;
-}
-
-.subDone {
-  text-decoration: line-through;
-  opacity: 0.6;
-}
-
-
-
-
 
 
 
@@ -153,18 +119,53 @@
 .subTaskItem {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 14px;
-}
-
-.subTaskItem input[type="checkbox"] {
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background 0.15s ease;
 }
 
-.doneText {
-  text-decoration: line-through;
-  color: #555;
+.subTaskItem:hover {
+  background: rgba(0,0,0,0.05);
 }
+
+
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1.5px solid #999;
+  background: transparent;
+  font-size: 12px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.subTaskDone .checkbox {
+  background: #4ade80;
+  border-color: #4ade80;
+  color: #fff;
+}
+
+
+.subTaskTitle {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+
+.subTaskDone .subTaskTitle {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+
+
 
 .addSubTask {
   display: flex;
@@ -172,17 +173,18 @@
   margin-top: 6px;
 }
 
+
 .addSubTask input[type="text"] {
   flex: 1;
-  padding: 4px 6px;
-  border-radius: 4px;
+  padding: 6px 8px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .addSubTask button {
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 6px 10px;
+  border-radius: 6px;
   border: none;
   background-color: #3b82f6;
   color: white;
@@ -194,18 +196,113 @@
   background-color: #2563eb;
 }
 
-/* Темная тема */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 body[data-theme="dark"] .subTasks {
   border-top: 1px solid rgba(255,255,255,0.2);
 }
 
-body[data-theme="dark"] .addSubTask input[type="text"] {
-  border: 1px solid #555;
-  background-color: #222;
-  color: #e0e0e0;
+body[data-theme="dark"] .subTaskItem:hover {
+  background: rgba(255,255,255,0.08);
 }
 
-body[data-theme="dark"] .doneText {
-  color: #aaa;
+body[data-theme="dark"] .checkbox {
+  border-color: #aaa;
 }
 
+body[data-theme="dark"] .subTaskDone .checkbox {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+
+body[data-theme="dark"] .addSubTask input {
+  background-color: #1f2933;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: var(--card-bg);
+  color: var(--card-text);
+  border-radius: 8px;
+  padding: 20px;
+  width: 400px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.deleteSubTaskBtn {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: red;
+}
