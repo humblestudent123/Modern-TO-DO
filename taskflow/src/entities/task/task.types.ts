@@ -1,14 +1,15 @@
-// src/entities/task/task.types.ts
 export interface SubTask {
-  id: number;
+  id: string; // должно быть string, а не number
   title: string;
   isDone: boolean;
 }
 
 export interface Task {
-  id: number;
+  id: string;
   title: string;
-  subTasks: SubTask[];
+  columnId: string;
+  priority: "low" | "normal" | "high";
+  isPinned: boolean;
+  isImportant: boolean;
+  subTasks?: SubTask[]; // опциональное поле
 }
-
-

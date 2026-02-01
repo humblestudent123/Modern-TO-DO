@@ -1,34 +1,99 @@
 :root {
-  --bg: #f0f0f0;
-  --card-bg: #fff;
-  --text: #000;
-  --border: #aaa;
+  /* Основные цвета */
+  --bg: #f5f5f5;
+  --card-bg: #ffffff;
+  --text: #1f2937;
+  --text-secondary: #6b7280;
+  --border: #e5e7eb;
+  
+  /* Цвета колонок */
+  --todo-bg: #eff6ff;
+  --todo-border: #bfdbfe;
+  --inProgress-bg: #fef3c7;
+  --inProgress-border: #fde68a;
+  --done-bg: #d1fae5;
+  --done-border: #a7f3d0;
+  
+  /* UI элементы */
+  --toolbar-bg: #f9fafb;
+  --input-bg: #ffffff;
+  --button-primary: #3b82f6;
+  --button-primary-hover: #2563eb;
+  --shadow: rgba(0, 0, 0, 0.1);
+  
+  /* Приоритеты */
+  --priority-low: #10b981;
+  --priority-normal: #f59e0b;
+  --priority-high: #ef4444;
 }
 
 [data-theme="dark"] {
-  --bg: #1e1e2f;
-  --card-bg: #2e2e3f;
-  --text: #fff;
-  --border: #555;
+  /* Основные цвета */
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border: #334155;
+  
+  /* Цвета колонок */
+  --todo-bg: #1e3a5f;
+  --todo-border: #2563eb;
+  --inProgress-bg: #4a3c1f;
+  --inProgress-border: #f59e0b;
+  --done-bg: #064e3b;
+  --done-border: #059669;
+  
+  /* UI элементы */
+  --toolbar-bg: #1e293b;
+  --input-bg: #334155;
+  --button-primary: #3b82f6;
+  --button-primary-hover: #60a5fa;
+  --shadow: rgba(0, 0, 0, 0.3);
+  
+  /* Приоритеты */
+  --priority-low: #34d399;
+  --priority-normal: #fbbf24;
+  --priority-high: #f87171;
 }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-
-/* src/index.css или App.css */
-:root {
-  --card-bg: #ffffff;
-  --card-text: #111111;
+* {
+  box-sizing: border-box;
 }
 
-[data-theme="dark"] {
-  --card-bg: #1f2937;    /* темный фон карточки */
-  --card-text: #f9fafb;  /* светлый текст */
-  --todo-bg: #111827;
-  --inProgress-bg: #374151;
-  --done-bg: #065f46;
+/* Скроллбар */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) var(--bg);
 }

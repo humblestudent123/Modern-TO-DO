@@ -3,141 +3,186 @@ import Column from "./Column/Column";
 import styles from "./Board.module.css";
 import type { Task } from "../../entities/task/task.types";
 
+const STORAGE_KEY = "tasks";
+
+const DEFAULT_TASKS: Task[] = [
+  { id: "1", title: "Buy groceries", columnId: "todo", priority: "normal", subTasks: [] },
+  { id: "2", title: "Clean room", columnId: "todo", priority: "low", subTasks: [] },
+  { id: "3", title: "Finish project", columnId: "inProgress", priority: "high", subTasks: [] },
+  { id: "4", title: "Read book", columnId: "inProgress", priority: "normal", subTasks: [] },
+  { id: "5", title: "Workout", columnId: "done", priority: "normal", subTasks: [] },
+  { id: "6", title: "Call friend", columnId: "done", priority: "low", subTasks: [] },
+];
+
+const COLUMNS = [
+  { id: "todo", title: "Todo" },
+  { id: "inProgress", title: "In Progress" },
+  { id: "done", title: "Done" },
+] as const;
+
 export default function Board() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [tasks, setTasks] = useState<Task[]>([]);
-
-
-
-  const handleDeleteSubTask = (taskId: number, subTaskId: number) => {
-  setTasks(prev =>
-    prev.map(task =>
-      task.id === taskId
-        ? { ...task, subTasks: task.subTasks.filter(st => st.id !== subTaskId) }
-        : task
-    )
-  );
-};
-
+  const [newTaskTitle, setNewTaskTitle] = useState("");
 
   useEffect(() => {
-    const savedTasks = localStorage.getItem("tasks");
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
-    } else {
-      setTasks([
-        { id: "1", title: "Buy groceries", columnId: "todo", priority: "normal", isPinned: false, isImportant: true },
-        { id: "2", title: "Clean room", columnId: "todo", priority: "low", isPinned: false, isImportant: false },
-        { id: "3", title: "Finish project", columnId: "inProgress", priority: "high", isPinned: true, isImportant: true },
-        { id: "4", title: "Read book", columnId: "inProgress", priority: "normal", isPinned: false, isImportant: false },
-        { id: "5", title: "Workout", columnId: "done", priority: "normal", isPinned: false, isImportant: false },
-        { id: "6", title: "Call friend", columnId: "done", priority: "low", isPinned: false, isImportant: false },
-      ]);
+    try {
+      const savedTasks = localStorage.getItem(STORAGE_KEY);
+      if (savedTasks) {
+        const parsedTasks = JSON.parse(savedTasks);
+        setTasks(parsedTasks);
+      } else {
+        setTasks(DEFAULT_TASKS);
+      }
+    } catch (error) {
+      console.error("Failed to load tasks from localStorage:", error);
+      setTasks(DEFAULT_TASKS);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    if (tasks.length > 0) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+      } catch (error) {
+        console.error("Failed to save tasks to localStorage:", error);
+      }
+    }
   }, [tasks]);
 
   useEffect(() => {
     document.body.dataset.theme = theme;
   }, [theme]);
 
-  const toggleTheme = () => setTheme(prev => (prev === "dark" ? "light" : "dark"));
+  const toggleTheme = () => {
+    setTheme(prev => (prev === "dark" ? "light" : "dark"));
+  };
 
-  const addTask = (title: string, columnId: string, priority: Task["priority"], isPinned: boolean, isImportant: boolean) => {
-    const newTask: Task = { id: Date.now().toString(), title, columnId, priority, isPinned, isImportant };
+  const handleAddTask = () => {
+    const trimmedTitle = newTaskTitle.trim();
+    if (!trimmedTitle) return;
+
+    const newTask: Task = {
+      id: Date.now().toString(),
+      title: trimmedTitle,
+      columnId: "todo",
+      priority: "normal",
+      subTasks: [],
+    };
+
     setTasks(prev => [...prev, newTask]);
+    setNewTaskTitle("");
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleAddTask();
+    }
   };
 
   const addSubTask = (taskId: string, title: string) => {
+    const trimmedTitle = title.trim();
+    if (!trimmedTitle) return;
+
     setTasks(prev =>
       prev.map(task =>
         task.id === taskId
-          ? { ...task, subTasks: [...(task.subTasks || []), { id: Date.now().toString(), title, isDone: false }] }
+          ? {
+              ...task,
+              subTasks: [
+                ...(task.subTasks || []),
+                { 
+                  id: Date.now().toString(), 
+                  title: trimmedTitle, 
+                  isDone: false 
+                }
+              ]
+            }
           : task
       )
     );
   };
 
-  
-
-
-
-  // Board.tsx — внутри компонента Board, рядом с другими функциями
-const toggleSubTask = (taskId: string, subTaskId: string) => {
-  setTasks(prev =>
-    prev.map(task =>
-      task.id === taskId
-        ? {
-            ...task,
-            subTasks: task.subTasks?.map(sub =>
-              sub.id === subTaskId ? { ...sub, isDone: !sub.isDone } : sub
-            ),
-          }
-        : task
-    )
-  );
-};
-
-
-
-
-
-
-  const deleteTask = (id: string) => setTasks(prev => prev.filter(task => task.id !== id));
-  const moveTask = (taskId: string, toColumnId: string) => {
-    setTasks(prev => prev.map(task => task.id === taskId ? { ...task, columnId: toColumnId } : task));
+  const toggleSubTask = (taskId: string, subTaskId: string) => {
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === taskId
+          ? {
+              ...task,
+              subTasks: task.subTasks?.map(sub =>
+                sub.id === subTaskId ? { ...sub, isDone: !sub.isDone } : sub
+              ),
+            }
+          : task
+      )
+    );
   };
-  const togglePinned = (id: string) => setTasks(prev => prev.map(task => task.id === id ? { ...task, isPinned: !task.isPinned } : task));
-  const toggleImportant = (id: string) => setTasks(prev => prev.map(task => task.id === id ? { ...task, isImportant: !task.isImportant } : task));
-  const changePriority = (id: string, priority: Task["priority"]) => setTasks(prev => prev.map(task => task.id === id ? { ...task, priority } : task));
+
+  const deleteSubTask = (taskId: string, subTaskId: string) => {
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === taskId
+          ? { ...task, subTasks: task.subTasks?.filter(st => st.id !== subTaskId) || [] }
+          : task
+      )
+    );
+  };
+
+  const deleteTask = (id: string) => {
+    setTasks(prev => prev.filter(task => task.id !== id));
+  };
+
+  const moveTask = (taskId: string, toColumnId: string) => {
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === taskId ? { ...task, columnId: toColumnId } : task
+      )
+    );
+  };
+
+  const changePriority = (id: string, priority: Task["priority"]) => {
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === id ? { ...task, priority } : task
+      )
+    );
+  };
 
   return (
-    <div>
-      <div style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
-        <input id="newTaskInput" placeholder="New task" />
-        <select id="prioritySelect">
-          <option value="low">Low</option>
-          <option value="normal">Normal</option>
-          <option value="high">High</option>
-        </select>
-        <label>
-          <input type="checkbox" id="pinnedCheckbox" /> Pinned
-        </label>
-        <label>
-          <input type="checkbox" id="importantCheckbox" /> Important
-        </label>
-        <button onClick={() => {
-          const input = document.getElementById("newTaskInput") as HTMLInputElement;
-          const priority = (document.getElementById("prioritySelect") as HTMLSelectElement).value as Task["priority"];
-          const isPinned = (document.getElementById("pinnedCheckbox") as HTMLInputElement).checked;
-          const isImportant = (document.getElementById("importantCheckbox") as HTMLInputElement).checked;
-          if (input.value) {
-            addTask(input.value, "todo", priority, isPinned, isImportant);
-            input.value = "";
-          }
-        }}>Add Task</button>
+    <div className={styles.container}>
+      <button className={styles.themeToggle} onClick={toggleTheme}>
+        {theme === "dark" ? "🌞" : "🌙"}
+      </button>
 
-        <button onClick={toggleTheme}>Toggle Theme</button>
+      <div className={styles.toolbar}>
+        <div className={styles.inputWrapper}>
+          <input
+            type="text"
+            className={styles.input}
+            placeholder="Add a new task..."
+            value={newTaskTitle}
+            onChange={(e) => setNewTaskTitle(e.target.value)}
+            onKeyPress={handleKeyPress}
+          />
+          <button className={styles.addButton} onClick={handleAddTask}>
+            ➜
+          </button>
+        </div>
       </div>
 
       <section className={styles.board}>
-        {["todo", "inProgress", "done"].map(columnId => (
+        {COLUMNS.map(column => (
           <Column
-            key={columnId}
-            title={columnId === "todo" ? "Todo" : columnId === "inProgress" ? "In Progress" : "Done"}
-            columnId={columnId}
+            key={column.id}
+            title={column.title}
+            columnId={column.id}
             tasks={tasks}
-            onTogglePinned={togglePinned}
-            onToggleImportant={toggleImportant}
             onDelete={deleteTask}
             onMoveTask={moveTask}
             onChangePriority={changePriority}
-            onAddSubTask={addSubTask} // <- передаем в Column
+            onAddSubTask={addSubTask}
             onToggleSubTask={toggleSubTask}
-            onDeleteSubTask={handleDeleteSubTask}
+            onDeleteSubTask={deleteSubTask}
           />
         ))}
       </section>

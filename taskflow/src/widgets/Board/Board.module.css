@@ -1,33 +1,138 @@
+.container {
+  padding: 20px;
+  min-height: 100vh;
+  position: relative;
+}
+
+.themeToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: none;
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.themeToggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px var(--shadow);
+}
+
+.themeToggle:active {
+  transform: scale(0.95);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  background: var(--card-bg);
+  border-radius: 50px;
+  box-shadow: 0 4px 20px var(--shadow);
+  padding: 8px 8px 8px 24px;
+  max-width: 600px;
+  width: 100%;
+  transition: box-shadow 0.3s;
+}
+
+.inputWrapper:focus-within {
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.3);
+}
+
+.input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px 16px;
+  font-size: 16px;
+  color: var(--text);
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-secondary);
+}
+
+.addButton {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-size: 28px;
+  font-weight: 300;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.addButton:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(102, 126, 234, 0.6);
+}
+
+.addButton:active {
+  transform: scale(0.95);
+}
+
 .board {
   display: flex;
   gap: 16px;
   padding: 16px;
+  min-height: 500px;
 }
 
-/* Фоны для колонок */
-.todo-column {
-  background-color: #f0f8ff; /* светло-голубой */
-  border-radius: 8px;
-  padding: 12px;
-  flex: 1;
+/* Адаптивность */
+@media (max-width: 768px) {
+  .board {
+    flex-direction: column;
+  }
+
+  .inputWrapper {
+    max-width: 100%;
+  }
+
+  .themeToggle {
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+  }
 }
 
-.inProgress-column {
-  background-color: #fff3cd; /* светло-жёлтый */
-  border-radius: 8px;
-  padding: 12px;
-  flex: 1;
+/* Тёмная тема */
+[data-theme="dark"] .inputWrapper {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
-.done-column {
-  background-color: #d4edda; /* светло-зелёный */
-  border-radius: 8px;
-  padding: 12px;
-  flex: 1;
+[data-theme="dark"] .inputWrapper:focus-within {
+  box-shadow: 0 6px 24px rgba(59, 130, 246, 0.5);
 }
 
+[data-theme="dark"] .themeToggle {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
 
-
-
-
-  
+[data-theme="dark"] .themeToggle:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+}
