@@ -20,16 +20,16 @@ export default function Board() {
     try {
       const savedTasks = localStorage.getItem(STORAGE_KEY);
       if (savedTasks) {
-        const parsedTasks = JSON.parse(savedTasks);
-        setTasks(parsedTasks);
+        setTasks(JSON.parse(savedTasks));
       } else {
-        setTasks(DEFAULT_TASKS);
+        setTasks([]); // ❌ вместо DEFAULT_TASKS
       }
     } catch (error) {
       console.error("Failed to load tasks from localStorage:", error);
-      setTasks(DEFAULT_TASKS);
+      setTasks([]); // ❌ вместо DEFAULT_TASKS
     }
   }, []);
+
 
   useEffect(() => {
     if (tasks.length > 0) {
@@ -147,6 +147,7 @@ export default function Board() {
     );
   };
 
+  
   return (
     <div className={styles.container}>
       <button className={styles.themeToggle} onClick={toggleTheme}>

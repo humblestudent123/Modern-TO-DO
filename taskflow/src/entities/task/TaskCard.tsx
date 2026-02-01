@@ -12,13 +12,14 @@ type Props = {
   onToggleSubTask?: (taskId: string, subTaskId: string) => void;
   onDeleteSubTask?: (taskId: string, subTaskId: string) => void;
   onReorderSubTasks?: (taskId: string, newSubTasks: SubTask[]) => void;
+  onTogglePinned?: (id: string) => void;       
+  onToggleImportant?: (id: string) => void; 
   draggable?: boolean;
   onDragStart?: (e: React.DragEvent) => void;
 };
 
 export default function TaskCard({
   task,
-  columnId,
   onDelete,
   onChangePriority,
   onAddSubTask,
@@ -31,18 +32,17 @@ export default function TaskCard({
   const [modalOpen, setModalOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
-  const priorityColors = {
+  const priorityColors: Record<Task["priority"], string> = {
     high: "#ef4444",
     normal: "#f59e0b",
     low: "#10b981",
   };
 
   const PRIORITY_LABELS: Record<Task["priority"], string> = {
-  high: "Высокий",
-  normal: "Средний",
-  low: "Низкий",
-};
-
+    high: "Высокий",
+    normal: "Средний",
+    low: "Низкий",
+  };
 
   const completedCount = task.subTasks?.filter(sub => sub.isDone).length || 0;
   const totalCount = task.subTasks?.length || 0;
@@ -52,40 +52,35 @@ export default function TaskCard({
     onDragStart?.(e);
   };
 
-  const handleDragEnd = () => {
-    setIsDragging(false);
-  };
+  const handleDragEnd = () => setIsDragging(false);
 
-  const handleClick = () => {
-    if (!isDragging) {
-      setModalOpen(true);
-    }
-  };
+  const handleClick = () => !isDragging && setModalOpen(true);
 
   return (
     <>
       <div
         className={`${styles.card} ${isDragging ? styles.dragging : ""}`}
-        style={{ borderLeftColor: priorityColors[task.priority], borderLeftWidth: '4px' }}
+        style={{ borderLeft: `4px solid ${priorityColors[task.priority]}` }}
         draggable={draggable}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
         onClick={handleClick}
       >
+        {/* Заголовок */}
         <div className={styles.cardHeader}>
           <h4 className={styles.title}>{task.title}</h4>
-          <button 
+          <button
             className={styles.deleteButton}
             onClick={(e) => {
               e.stopPropagation();
               onDelete?.(task.id);
             }}
-            aria-label="Delete task"
           >
             ✕
           </button>
         </div>
 
+        {/* Подзадачи */}
         {totalCount > 0 && (
           <div className={styles.subtaskInfo}>
             <div className={styles.subtaskCount}>
@@ -97,15 +92,16 @@ export default function TaskCard({
             <div className={styles.progressBar}>
               <div
                 className={styles.progressFill}
-                style={{ 
-                  width: `${totalCount > 0 ? (completedCount / totalCount) * 100 : 0}%`,
-                  backgroundColor: priorityColors[task.priority]
+                style={{
+                  width: `${(completedCount / totalCount) * 100}%`,
+                  backgroundColor: priorityColors[task.priority],
                 }}
               />
             </div>
           </div>
         )}
 
+        {/* Приоритет */}
         <div className={styles.footer}>
           <select
             className={styles.prioritySelect}
@@ -121,7 +117,7 @@ export default function TaskCard({
             <option value="low">🟢 Низкий</option>
           </select>
 
-          <span 
+          <span
             className={styles.priorityBadge}
             style={{ backgroundColor: priorityColors[task.priority] }}
           >
@@ -130,6 +126,7 @@ export default function TaskCard({
         </div>
       </div>
 
+      {/* Модалка */}
       <TaskModal
         task={task}
         isOpen={modalOpen}

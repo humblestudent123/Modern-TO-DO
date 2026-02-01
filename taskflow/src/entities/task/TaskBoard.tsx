@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
 import TaskCard from "./TaskCard";
-import type { Task, SubTask } from "./task.types";
+import type { Task } from "./task.types";
 
 export default function TaskBoard() {
   const [tasks, setTasks] = useState<Task[]>([
-    { id: nanoid(), title: "First Task", columnId: "todo", isPinned: false, isImportant: false, subTasks: [] },
-    { id: nanoid(), title: "Second Task", columnId: "todo", isPinned: false, isImportant: true, subTasks: [] },
+    { id: nanoid(), title: "First Task", columnId: "todo", priority: "normal", isPinned: false, isImportant: false, subTasks: [] },
+    { id: nanoid(), title: "Second Task", columnId: "todo", priority: "normal", isPinned: false, isImportant: true, subTasks: [] },
   ]);
 
   const handleAddSubTask = (taskId: string, title: string) => {
@@ -25,7 +25,7 @@ export default function TaskBoard() {
         task.id === taskId
           ? {
               ...task,
-              subTasks: task.subTasks.map(sub =>
+              subTasks: task.subTasks?.map(sub =>
                 sub.id === subTaskId ? { ...sub, isDone: !sub.isDone } : sub
               )
             }
@@ -38,7 +38,7 @@ export default function TaskBoard() {
     setTasks(prev =>
       prev.map(task =>
         task.id === taskId
-          ? { ...task, subTasks: task.subTasks.filter(sub => sub.id !== subTaskId) }
+          ? { ...task, subTasks: task.subTasks?.filter(sub => sub.id !== subTaskId) }
           : task
       )
     );
