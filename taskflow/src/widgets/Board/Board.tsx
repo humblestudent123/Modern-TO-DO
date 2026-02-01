@@ -5,15 +5,6 @@ import type { Task, SubTask } from "../../entities/task/task.types";
 
 const STORAGE_KEY = "tasks";
 
-const DEFAULT_TASKS: Task[] = [
-  { id: "1", title: "Buy groceries", columnId: "todo", priority: "средний", subTasks: [] },
-  { id: "2", title: "Clean room", columnId: "todo", priority: "low", subTasks: [] },
-  { id: "3", title: "Finish project", columnId: "inProgress", priority: "high", subTasks: [] },
-  { id: "4", title: "Read book", columnId: "inProgress", priority: "normal", subTasks: [] },
-  { id: "5", title: "Workout", columnId: "done", priority: "normal", subTasks: [] },
-  { id: "6", title: "Call friend", columnId: "done", priority: "low", subTasks: [] },
-];
-
 const COLUMNS = [
   { id: "todo", title: "Задачи" },
   { id: "inProgress", title: "В процессе" },

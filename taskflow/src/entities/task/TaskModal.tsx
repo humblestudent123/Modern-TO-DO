@@ -143,7 +143,7 @@ export default function TaskModal({
           <input
             type="text"
             className={styles.input}
-            placeholder="Add a new subtask..."
+            placeholder="Добавьте новую подзадачу..."
             value={newSubTaskTitle}
             onChange={(e) => setNewSubTaskTitle(e.target.value)}
             onKeyDown={handleKeyPress}

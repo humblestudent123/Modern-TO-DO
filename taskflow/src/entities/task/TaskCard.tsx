@@ -37,6 +37,13 @@ export default function TaskCard({
     low: "#10b981",
   };
 
+  const PRIORITY_LABELS: Record<Task["priority"], string> = {
+  high: "Высокий",
+  normal: "Средний",
+  low: "Низкий",
+};
+
+
   const completedCount = task.subTasks?.filter(sub => sub.isDone).length || 0;
   const totalCount = task.subTasks?.length || 0;
 
@@ -118,7 +125,7 @@ export default function TaskCard({
             className={styles.priorityBadge}
             style={{ backgroundColor: priorityColors[task.priority] }}
           >
-            {task.priority}
+            {PRIORITY_LABELS[task.priority]}
           </span>
         </div>
       </div>
