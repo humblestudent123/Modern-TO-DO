@@ -109,9 +109,9 @@ export default function TaskCard({
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <option value="high">🔴 High</option>
-            <option value="normal">🟡 Normal</option>
-            <option value="low">🟢 Low</option>
+            <option value="high">🔴 Высокий</option>
+            <option value="normal">🟡 Средний</option>
+            <option value="low">🟢 Низкий</option>
           </select>
 
           <span 

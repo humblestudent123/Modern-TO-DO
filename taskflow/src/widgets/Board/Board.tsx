@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import Column from "./Column/Column";
 import styles from "./Board.module.css";
-import type { Task } from "../../entities/task/task.types";
+import type { Task, SubTask } from "../../entities/task/task.types";
 
 const STORAGE_KEY = "tasks";
 
 const DEFAULT_TASKS: Task[] = [
-  { id: "1", title: "Buy groceries", columnId: "todo", priority: "normal", subTasks: [] },
+  { id: "1", title: "Buy groceries", columnId: "todo", priority: "средний", subTasks: [] },
   { id: "2", title: "Clean room", columnId: "todo", priority: "low", subTasks: [] },
   { id: "3", title: "Finish project", columnId: "inProgress", priority: "high", subTasks: [] },
   { id: "4", title: "Read book", columnId: "inProgress", priority: "normal", subTasks: [] },
@@ -15,9 +15,9 @@ const DEFAULT_TASKS: Task[] = [
 ];
 
 const COLUMNS = [
-  { id: "todo", title: "Todo" },
-  { id: "inProgress", title: "In Progress" },
-  { id: "done", title: "Done" },
+  { id: "todo", title: "Задачи" },
+  { id: "inProgress", title: "В процессе" },
+  { id: "done", title: "Сделано" },
 ] as const;
 
 export default function Board() {
@@ -103,15 +103,13 @@ export default function Board() {
     );
   };
 
-
   const reorderSubTasks = (taskId: string, newSubTasks: SubTask[]) => {
-  setTasks(prev =>
-    prev.map(task =>
-      task.id === taskId ? { ...task, subTasks: newSubTasks } : task
-    )
-  );
-};
-
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === taskId ? { ...task, subTasks: newSubTasks } : task
+      )
+    );
+  };
 
   const toggleSubTask = (taskId: string, subTaskId: string) => {
     setTasks(prev =>
@@ -169,13 +167,17 @@ export default function Board() {
           <input
             type="text"
             className={styles.input}
-            placeholder="Add a new task..."
+            placeholder="Добавить новую задачу..."
             value={newTaskTitle}
             onChange={(e) => setNewTaskTitle(e.target.value)}
             onKeyPress={handleKeyPress}
           />
-          <button className={styles.addButton} onClick={handleAddTask}>
-            ➜
+          <button 
+            className={styles.addButton} 
+            onClick={handleAddTask}
+            disabled={!newTaskTitle.trim()}
+          >
+            +
           </button>
         </div>
       </div>
@@ -193,6 +195,7 @@ export default function Board() {
             onAddSubTask={addSubTask}
             onToggleSubTask={toggleSubTask}
             onDeleteSubTask={deleteSubTask}
+            onReorderSubTasks={reorderSubTasks}
           />
         ))}
       </section>
