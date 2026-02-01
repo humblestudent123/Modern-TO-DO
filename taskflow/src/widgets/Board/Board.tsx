@@ -103,6 +103,16 @@ export default function Board() {
     );
   };
 
+
+  const reorderSubTasks = (taskId: string, newSubTasks: SubTask[]) => {
+  setTasks(prev =>
+    prev.map(task =>
+      task.id === taskId ? { ...task, subTasks: newSubTasks } : task
+    )
+  );
+};
+
+
   const toggleSubTask = (taskId: string, subTaskId: string) => {
     setTasks(prev =>
       prev.map(task =>
