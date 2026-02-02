@@ -11,7 +11,7 @@ export interface Task {
   priority: "low" | "normal" | "high";
   isPinned: boolean;
   isImportant: boolean;
-  subTasks?: SubTask[]; // опциональное поле
+  subTasks: SubTask[];
 }
 
 

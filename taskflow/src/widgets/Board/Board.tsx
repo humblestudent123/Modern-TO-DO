@@ -58,6 +58,8 @@ export default function Board() {
       title: trimmedTitle,
       columnId: "todo",
       priority: "normal",
+      isPinned: false,
+      isImportant: false,
       subTasks: [],
     };
 

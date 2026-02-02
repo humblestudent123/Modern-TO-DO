@@ -5,7 +5,6 @@ import styles from "./TaskCard.module.css";
 
 type Props = {
   task: Task;
-  columnId: string;
   onDelete?: (id: string) => void;
   onChangePriority?: (id: string, priority: Task["priority"]) => void;
   onAddSubTask?: (taskId: string, title: string) => void;
@@ -17,6 +16,7 @@ type Props = {
   draggable?: boolean;
   onDragStart?: (e: React.DragEvent) => void;
 };
+
 
 export default function TaskCard({
   task,
