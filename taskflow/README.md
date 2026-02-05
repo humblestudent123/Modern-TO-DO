@@ -1,73 +1,87 @@
-# React + TypeScript + Vite
+# TaskFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TaskFlow — это современное веб-приложение для управления задачами (to-do list), разработанное как часть проекта **Modern TO-DO**.  
+Приложение предназначено для удобного создания, редактирования и управления задачами с простым и понятным пользовательским интерфейсом.
 
-Currently, two official plugins are available:
+Проект создавался в учебных и практических целях с упором на работу с современным фронтенд-стеком и архитектурой приложения.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## Функциональность
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Создание новых задач  
+- Редактирование существующих задач  
+- Удаление задач  
+- Отображение списка задач в реальном времени  
+- Интерактивный пользовательский интерфейс  
+- Адаптивная верстка  
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Используемые технологии
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- JavaScript / TypeScript  
+- React  
+- CSS / CSS Modules  
+- Современный инструмент сборки (Vite или аналогичный)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Актуальный стек можно посмотреть в файле `package.json`.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Структура проекта
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Примерная структура папки `taskflow`:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+taskflow/
+├── public/
+├── src/
+│ ├── components/
+│ ├── styles/
+│ ├── types/
+│ ├── utils/
+│ └── main.tsx
+├── package.json
+└── README.md
+
+Проект разбит на логические модули для удобства поддержки и масштабирования.
+
+---
+
+## Установка и запуск
+
+Клонировать репозиторий:
+git clone https://github.com/humblestudent123/Modern-TO-DO.git
+
+Перейти в папку проекта: cd Modern-TO-DO/taskflow
+
+
+Установить зависимости: npm install
+
+Запустить проект в режиме разработки: npm run dev
+
+Сборка проекта: npm run build
+
+
+
+---
+
+## Цель проекта
+
+Проект создан для:
+
+- практики работы с React и компонентным подходом  
+- закрепления навыков работы с состоянием и пользовательским вводом  
+- улучшения структуры и читаемости кода  
+- формирования проекта для портфолио  
+
+---
+
+## Возможные улучшения
+
+- Фильтрация задач по статусу  
+- Drag & Drop для изменения порядка задач  
+- Хранение данных на сервере  
+- Авторизация пользователей  
+
+---

@@ -14,7 +14,7 @@ type Props = {
   onTogglePinned?: (id: string) => void;       
   onToggleImportant?: (id: string) => void; 
   draggable?: boolean;
-  onDragStart?: (e: React.DragEvent) => void;
+  onDragStart?: (e: React.DragEvent<HTMLDivElement>) => void;
 };
 
 
