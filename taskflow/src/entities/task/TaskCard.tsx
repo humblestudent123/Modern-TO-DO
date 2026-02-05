@@ -11,12 +11,11 @@ type Props = {
   onToggleSubTask?: (taskId: string, subTaskId: string) => void;
   onDeleteSubTask?: (taskId: string, subTaskId: string) => void;
   onReorderSubTasks?: (taskId: string, newSubTasks: SubTask[]) => void;
-  onTogglePinned?: (id: string) => void;       
-  onToggleImportant?: (id: string) => void; 
+  onTogglePinned?: (id: string) => void;
+  onToggleImportant?: (id: string) => void;
   draggable?: boolean;
-  onDragStart?: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDropTask?: (draggedId: string, targetId: string) => void;
 };
-
 
 export default function TaskCard({
   task,
@@ -27,7 +26,7 @@ export default function TaskCard({
   onDeleteSubTask,
   onReorderSubTasks,
   draggable = true,
-  onDragStart,
+  onDropTask,
 }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -47,12 +46,24 @@ export default function TaskCard({
   const completedCount = task.subTasks?.filter(sub => sub.isDone).length || 0;
   const totalCount = task.subTasks?.length || 0;
 
-  const handleDragStart = (e: React.DragEvent) => {
+  // ================= Drag & Drop =================
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     setIsDragging(true);
-    onDragStart?.(e);
+    e.dataTransfer.setData("text/plain", task.id);
+    e.dataTransfer.effectAllowed = "move";
   };
 
   const handleDragEnd = () => setIsDragging(false);
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => e.preventDefault();
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const draggedId = e.dataTransfer.getData("text/plain");
+    if (draggedId && draggedId !== task.id) {
+      onDropTask?.(draggedId, task.id);
+    }
+  };
 
   const handleClick = () => !isDragging && setModalOpen(true);
 
@@ -64,6 +75,8 @@ export default function TaskCard({
         draggable={draggable}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
         onClick={handleClick}
       >
         {/* Заголовок */}
