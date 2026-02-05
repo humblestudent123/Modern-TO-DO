@@ -21,8 +21,7 @@ TaskFlow — это современное веб-приложение для у
 
 ---
 
-![Uploading taskflow-1.png…]()
-
+<img width="1891" height="891" alt="taskflow-1" src="https://github.com/user-attachments/assets/14c8c2dd-bab8-47a6-8571-2cc7a5007965" />
 
 ## Используемые технологии
 
