@@ -1,11 +1,13 @@
-# TaskFlow
+<img width="1891" height="891" alt="taskflow-1" src="https://github.com/user-attachments/assets/2618a6c9-b551-4136-bbff-2f951b8a054a" /># TaskFlow
 
 TaskFlow — это современное веб-приложение для управления задачами (to-do list), разработанное как часть проекта **Modern TO-DO**.  
 Приложение предназначено для удобного создания, редактирования и управления задачами с простым и понятным пользовательским интерфейсом.
 
 Проект создавался в учебных и практических целях с упором на работу с современным фронтенд-стеком и архитектурой приложения.
 
+<img width="1891" height="891" alt="taskflow-1" src="https://github.com/user-attachments/assets/c52401f8-64b1-45ea-b483-d60b961ebb1d" />
 
+<img width="1886" height="893" alt="taskflow-2" src="https://github.com/user-attachments/assets/b9ad01f6-1c9b-4e24-a8ea-90dd0b50343f" />
 
 
 ---
