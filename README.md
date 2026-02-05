@@ -7,11 +7,6 @@ TaskFlow — это современное веб-приложение для у
 
 
 
-![Главный экран TaskFlow](taskflow-2.png)
-
-![Добовление заметки в TaskFlow](taskflow-1.png)
-
-
 
 ---
 
